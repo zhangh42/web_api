@@ -7,7 +7,7 @@
 
 ##### 动作时间 action_time
 - action_id 动作id
-- last_update_time 上次更新时间
+- action_update_time 上次更新时间
 
 ### api接口
 接口基地址 http://api.hangz.xyz
@@ -30,8 +30,8 @@ method: post
 url: http://api.hangz.xyz/action
 method: post
 请求参数
-    actionId   动作id
-    lastUpdateTime  更新时间，时间戳，精确到秒
+    action_id   动作id
+    action_update_time  更新时间，时间戳，精确到秒
 返回参数
     code
     msg
@@ -46,7 +46,7 @@ method: get
     action_infos
         [action_info, action_info, ...]
         其中action_info
-            actionId
-            lastUpdateTime
+            action_id
+            action_update_time
 备注：返回所有动作时间信息
 ```
