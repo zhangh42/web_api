@@ -66,8 +66,7 @@ app.post('/user', function (req, res) {
     collection.find({ 'name': name }).toArray(function (err, docs) {
         if (err) {
             throw err;
-        }
-        if (docs.length >= 1) {
+        }        if (docs.length >= 1) {
             console.log(docs);
             user_info = docs[0];
             if (user_info['pass'] != pass) {
@@ -77,7 +76,7 @@ app.post('/user', function (req, res) {
             return res.json(OK_res);
         }
         collection.insertOne({ 'name': name, 'pass': pass }, function (err, result) {
-            if (err) {
+            if(err) {
                 throw err;
             }
             req.session.user = user_info;
@@ -93,17 +92,18 @@ app.get('/action', function (req, res) {
     }
     user_info = req.session.user;
     name  = user_info['name'];
+    const db = client.db(dbName);
     const collection = db.collection('action_time');
     action_infos = [];
-    collection.find({'name':name}).toArray(function(err, doc){
+    collection.find({'name':name}).toArray(function(err, docs){
         if (err){
             throw err;
         }
         for(var i=0;i<docs.length;i++){
             action_infos.push(docs[i]);
         }
+        return res.json(action_infos);
     });
-    return res.json(action_infos);
 });
 
 app.post('/action', function (req, res) {
@@ -118,16 +118,35 @@ app.post('/action', function (req, res) {
     }
     action_id = data['action_id'];
     action_update_time = data['action_update_time'];
+    const db = client.db(dbName);
     const collection = db.collection('action_time');
-    collection.insertOne({
-        'name': name, 'action_id': action_id, 'action_update_time':
-            action_update_time
-    }, function (err, result) {
-        if (err) {
+    collection.find({'name':name,'action_id':action_id}).toArray(function(err,docs){
+        if (err){
             throw err;
         }
-        return res.json(OK_res);
-    })
+        if(docs.length > 0){
+            // 更新
+            collection.updateOne({'name':name,'action_id':action_id},{
+                $set: {'action_update_time':action_update_time}
+            }, function (err, result){
+                if (err){
+                    throw err;
+                }
+            });
+            return res.json(OK_res);
+        }
+        else{
+            collection.insertOne({
+                'name': name, 'action_id': action_id, 'action_update_time':
+                    action_update_time
+            }, function (err, result) {
+                if (err) {
+                    throw err;
+                }
+                return res.json(OK_res);
+            })
+        }
+    });
 });
 
 // catch 404 and forward to error handler
