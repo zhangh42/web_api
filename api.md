@@ -10,11 +10,11 @@
 - action_update_time 上次更新时间
 
 ### api接口
-接口基地址 http://api.hangz.xyz
+接口基地址 http://api.zhh1995.cn
 
 ##### 登录接口
 ```
-url: http://api.hangz.xyz/user
+url: http://api.zhh1995.cn/user
 method: post
 请求参数
     name
@@ -27,7 +27,7 @@ method: post
 
 ##### 上次修改时间接口
 ```
-url: http://api.hangz.xyz/action
+url: http://api.zhh1995.cn/action
 method: post
 请求参数
     action_id   动作id
