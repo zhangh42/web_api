@@ -103,7 +103,8 @@ app.get('/action', function (req, res) {
         for (var i = 0; i < docs.length; i++) {
             action_infos.push(docs[i]);
         }
-        return res.json(action_infos);
+        res_josn = {'code':0,'mag':'ok','action_infos':action_infos}
+        return res.json(res_josn);
     });
 });
 
