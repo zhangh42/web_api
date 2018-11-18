@@ -1,4 +1,5 @@
 ### 接口文档
+[接口文档已移至yapi](http://yapi.zhh1995.cn/project/11/interface/api)
 
 #### 数据库设计
 ##### 账号 users
